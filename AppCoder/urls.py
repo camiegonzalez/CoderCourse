@@ -12,9 +12,16 @@ from AppCoder import views
 urlpatterns = [
    
     path('', views.inicio, name="Inicio"), #esta era nuestra primer view
+    path('leerRopa', views.ropa, name="Ropa"),
+    path('ropa', views.agregarRopa, name="Agregar Prenda"),
+    path('leerMaquillajes', views.maquillaje, name="Maquillaje"),
+    path('maquillaje', views.agregarMaquillaje, name="Agregar maquillaje"),
+    path('leerCarteras', views.carteras, name="Carteras"),
+    path('cartera', views.agregarCartera, name="Agregar Carteras"),
     path('cursos', views.cursos, name="Cursos"),
     path('profesores', views.profesores, name="Profesores"),
     path('estudiantes', views.estudiantes, name="Estudiantes"),
+    path('entregables', views.entregables, name="Entregables"),
     path('entregables', views.entregables, name="Entregables"),
     #path('cursoFormulario', views.cursoFormulario, name="CursoFormulario"),
     #path('profesorFormulario', views.profesorFormulario, name="ProfesorFormulario"),

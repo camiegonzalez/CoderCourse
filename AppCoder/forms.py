@@ -5,6 +5,25 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
 
+class CarterasFormulario(forms.Form):
+    color= forms.CharField(max_length=30)
+    material= forms.CharField(max_length=30)
+    precio=forms.IntegerField()
+    capacidad = forms.IntegerField()
+
+class MaquillajesFormulario(forms.Form):
+    tipo= forms.CharField(max_length=30)
+    color= forms.CharField(max_length=30)
+    tamanio= forms.CharField(max_length=30)
+    precio=forms.IntegerField()
+    water_proof = forms.BooleanField()
+
+class RopaFormulario(forms.Form):
+    tipo= forms.CharField(max_length=30)
+    color= forms.CharField(max_length=30)
+    talle= forms.CharField(max_length=30)
+    precio=forms.IntegerField()
+
 class CursoFormulario(forms.Form):
 
     #Especificar los campos

@@ -1,0 +1,19 @@
+{% extends "AppCoder/padre.html" %}
+
+{% load static %}
+
+{% block contenidoQueCambia %}
+
+    <h2>Lista de carteras disponible</h2>
+    {% for c in carteras %}
+    <ul style="background-color: lightcyan;">
+        <li>{{c.color}}</li>
+        <li>{{c.capacidad}}</li>
+        <li>{{c.material}}</li>
+        <li>{{c.precio}}</li>
+    </ul>
+    {% endfor %}
+
+    <br>
+    <a href="cartera">Agregar otra Cartera</a>    
+{% endblock %}

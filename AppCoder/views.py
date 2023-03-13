@@ -2,8 +2,8 @@ from typing import List
 
 from django.shortcuts import redirect, render, HttpResponse
 from django.http import HttpResponse
-from AppCoder.models import Curso, Profesor, Avatar
-from AppCoder.forms import CursoFormulario, ProfesorFormulario, UserRegisterForm,UserEditForm,AvatarFormulario
+from AppCoder.models import Cartera, Maquillaje, Curso, Profesor, Avatar, Ropa
+from AppCoder.forms import CarterasFormulario, RopaFormulario,MaquillajesFormulario, CursoFormulario, ProfesorFormulario, UserRegisterForm,UserEditForm,AvatarFormulario
 
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
@@ -48,7 +48,7 @@ def inicio(request):
 
       avatares = Avatar.objects.filter(user=request.user.id)
       
-      return render(request, "AppCoder/inicio.html", {"url":avatares[0].imagen.url})
+      return render(request, "AppCoder/inicio.html")
 
 
 
@@ -128,13 +128,19 @@ def profesores(request):
 
 def buscar(request):
 
-      if  request.GET["camada"]:
-
-	      #respuesta = f"Estoy buscando la camada nro: {request.GET['camada'] }" 
-            camada = request.GET['camada'] 
-            cursos = Curso.objects.filter(camada__icontains=camada)
-
-            return render(request, "AppCoder/inicio.html", {"cursos":cursos, "camada":camada})
+      if  request.GET["color"] and request.GET["material"]:
+            color = request.GET['color'] 
+            material = request.GET['material'] 
+            carteras = Cartera.objects.filter(color__icontains=color, material__icontains=material)
+            return render(request, "AppCoder/inicio.html", {"carteras":carteras, "color":color, "material": material})
+      elif  request.GET["color"] and not request.GET["material"]:
+            color = request.GET['color'] 
+            carteras = Cartera.objects.filter(color__icontains=color)
+            return render(request, "AppCoder/inicio.html", {"carteras":carteras, "color":color, "material": "todos"})
+      elif  not request.GET["color"] and request.GET["material"]:
+            material = request.GET['material'] 
+            carteras = Cartera.objects.filter(material__icontains=material)
+            return render(request, "AppCoder/inicio.html", {"carteras":carteras, "color":"todos", "material": material})
 
       else: 
 
@@ -154,6 +160,116 @@ def leerProfesores(request):
 
       return render(request, "AppCoder/leerProfesores.html",contexto)
 
+def carteras(request):
+
+      carteras = Cartera.objects.all()
+
+      contexto= {"carteras":carteras} 
+
+      return render(request, "AppCoder/leerCarteras.html",contexto)
+
+def maquillaje(request):
+
+      maquillajes = Maquillaje.objects.all()
+
+      contexto= {"maquillajes":maquillajes} 
+
+      return render(request, "AppCoder/leerMaquillaje.html",contexto)
+
+def ropa(request):
+
+      ropa = Ropa.objects.all()
+
+      contexto= {"ropa":ropa} 
+
+      return render(request, "AppCoder/leerRopa.html",contexto)
+
+
+
+def agregarMaquillaje(request):
+
+      if request.method == 'POST':
+
+            miFormulario = MaquillajesFormulario(request.POST) #aquí mellega toda la información del html
+
+            print(miFormulario)
+
+            if miFormulario.is_valid:   #Si pasó la validación de Django
+
+                  informacion = miFormulario.cleaned_data
+
+                  maquillajes = Maquillaje (tipo=informacion['tipo'], tamanio=informacion['tamanio'], color=informacion['color'], precio=informacion['precio'], water_proof=informacion['water_proof']) 
+
+                  maquillajes.save()
+
+                  maquillajesGuardados = Maquillaje.objects.all()
+
+                  contexto= {"maquillajes":maquillajesGuardados} 
+
+                  return render(request, "AppCoder/leerMaquillaje.html",contexto)
+
+      else: 
+
+            miFormulario= MaquillajesFormulario() #Formulario vacio para construir el html
+
+      return render(request, "AppCoder/maquillaje.html", {"miFormulario":miFormulario})
+
+def agregarRopa(request):
+
+      if request.method == 'POST':
+
+            miFormulario = RopaFormulario(request.POST) #aquí mellega toda la información del html
+
+            print(miFormulario)
+
+            if miFormulario.is_valid:   #Si pasó la validación de Django
+
+                  informacion = miFormulario.cleaned_data
+
+                  ropa = Ropa (tipo=informacion['tipo'], talle=informacion['talle'], color=informacion['color'], precio=informacion['precio']) 
+
+                  ropa.save()
+
+
+                  prendasGuardadas = Ropa.objects.all()
+
+                  contexto= {"ropa":prendasGuardadas} 
+
+                  return render(request, "AppCoder/leerRopa.html",contexto)
+
+      else: 
+
+            miFormulario= RopaFormulario() #Formulario vacio para construir el html
+
+      return render(request, "AppCoder/ropa.html", {"miFormulario":miFormulario})
+
+def agregarCartera(request):
+
+      if request.method == 'POST':
+
+            miFormulario = CarterasFormulario(request.POST) #aquí mellega toda la información del html
+
+            print(miFormulario)
+
+            if miFormulario.is_valid:   #Si pasó la validación de Django
+
+                  informacion = miFormulario.cleaned_data
+
+                  cartera = Cartera (material=informacion['material'], capacidad=informacion['capacidad'], color=informacion['color'], precio=informacion['precio']) 
+
+                  cartera.save()
+
+                  carterasGuardadas = Cartera.objects.all()
+
+                  contexto= {"carteras":carterasGuardadas} 
+
+                  return render(request, "AppCoder/leerCarteras.html",contexto)
+
+      else: 
+
+            miFormulario= CarterasFormulario() #Formulario vacio para construir el html
+
+      return render(request, "AppCoder/cartera.html", {"miFormulario":miFormulario})
 
 
 def eliminarProfesor(request, profesor_nombre):

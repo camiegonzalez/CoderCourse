@@ -4,6 +4,26 @@ from django.template.defaultfilters import slugify
 
 
 
+class Cartera(models.Model):
+    color= models.CharField(max_length=30)
+    material= models.CharField(max_length=30)
+    precio=models.IntegerField()
+    capacidad = models.IntegerField()
+    
+class Maquillaje(models.Model):
+    tipo= models.CharField(max_length=30)
+    color= models.CharField(max_length=30)
+    tamanio= models.CharField(max_length=30)
+    precio=models.IntegerField()
+    water_proof = models.BooleanField()
+
+class Ropa(models.Model):
+    tipo= models.CharField(max_length=30)
+    color= models.CharField(max_length=30)
+    talle= models.CharField(max_length=30)
+    precio=models.IntegerField()
+
+
 # Create your models here.
 class Curso(models.Model):
 

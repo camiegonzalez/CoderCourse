@@ -5,7 +5,6 @@
 {% block contenidoQueCambia %}
 
         <div class="text-center">
-            <img height="40px" src="{{url}}" >
             <h3>Que bueno verte {{user.username}}</h3>
         </div>
 
@@ -13,11 +12,13 @@
     <h1>{{mensaje}}</h1>
   
 
-    <h3>Podes buscar una camada:</h3>
+    <h3>Podes buscar una carteras:</h3>
 
     <form action="/AppCoder/buscar/" method="GET">
-
-        <input type="number" name="camada" id="camada">
+        <label for="color"> Color </label>
+        <input type="text" name="color" id="color">
+        <label for="material"> material </label>
+        <input type="text" name="material" id="material">
 
         <input type="submit" value="Buscar">
 
@@ -28,17 +29,19 @@
 
     
 
-    {% if cursos %}
+    {% if carteras %}
 
-    <p>Estamos buscando el: {{camada}}</p>
+    <p>Estamos buscando la cartera: {{color}}, de material {{material}} </p>
 
-    <ul>
-	{% for curso in cursos %}
-		<li> {{curso.nombre}} </li>
-		<li> {{curso.camada}} </li>
+	{% for cartera in carteras %}
+    <ul style="background-color: lightsalmon;">
+		<li> {{cartera.material}} </li>
+		<li> {{cartera.precio}} </li>
+		<li> {{cartera.color}} </li>
+		<li> {{cartera.capacidad}} </li>
+    </ul>
 	{% endfor %}
 
-    </ul>
 
     {% else %}
     <p>No hay datos con esa descripción.</p>

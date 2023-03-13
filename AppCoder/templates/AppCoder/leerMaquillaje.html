@@ -1,0 +1,19 @@
+{% extends "AppCoder/padre.html" %}
+
+{% load static %}
+
+{% block contenidoQueCambia %}
+
+    <h2>Lista de Maquillajes disponible</h2>
+    {% for m in maquillajes %}
+    <ul style="background-color: lightcyan;">
+        <li>{{m.tipo}}</li>
+        <li>{{m.precio}}</li>
+        <li>{{m.talle}}</li>
+        <li>{{m.color}}</li>
+    </ul>
+    {% endfor %}
+
+    <br>
+    <a href="maquillaje">Agregar otro Maquillaje</a>    
+{% endblock %}

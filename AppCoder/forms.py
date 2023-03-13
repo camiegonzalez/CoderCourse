@@ -1,43 +1,8 @@
 
 from django import forms
-
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
-
-class CarterasFormulario(forms.Form):
-    color= forms.CharField(max_length=30)
-    material= forms.CharField(max_length=30)
-    precio=forms.IntegerField()
-    capacidad = forms.IntegerField()
-
-class MaquillajesFormulario(forms.Form):
-    tipo= forms.CharField(max_length=30)
-    color= forms.CharField(max_length=30)
-    tamanio= forms.CharField(max_length=30)
-    precio=forms.IntegerField()
-    water_proof = forms.BooleanField()
-
-class RopaFormulario(forms.Form):
-    tipo= forms.CharField(max_length=30)
-    color= forms.CharField(max_length=30)
-    talle= forms.CharField(max_length=30)
-    precio=forms.IntegerField()
-
-class CursoFormulario(forms.Form):
-
-    #Especificar los campos
-    curso = forms.CharField()
-    camada = forms.IntegerField()
-
-
-class ProfesorFormulario(forms.Form):   
-    nombre= forms.CharField(max_length=30)
-    apellido= forms.CharField(max_length=30)
-    email= forms.EmailField()
-    profesion= forms.CharField(max_length=30)
-
-
+from django.contrib.auth.forms import UserCreationForm
 
 class UserRegisterForm(UserCreationForm):
 
@@ -59,24 +24,21 @@ class UserRegisterForm(UserCreationForm):
         help_texts = {k:"" for k in fields}
 
 
-class UserEditForm(UserCreationForm):
+class CarterasFormulario(forms.Form):
+    color= forms.CharField(max_length=30)
+    material= forms.CharField(max_length=30)
+    precio=forms.IntegerField()
+    capacidad = forms.IntegerField()
 
-    #Acá se definen las opciones que queres modificar del usuario, 
-    #Ponemos las básicas
-    email = forms.EmailField(label="Modificar E-mail")
-    password1 = forms.CharField(label='Contraseña', widget=forms.PasswordInput)
-    password2 = forms.CharField(label='Repetir la contraseña', widget=forms.PasswordInput) 
+class MaquillajesFormulario(forms.Form):
+    tipo= forms.CharField(max_length=30)
+    color= forms.CharField(max_length=30)
+    tamanio= forms.CharField(max_length=30)
+    precio=forms.IntegerField()
+    water_proof = forms.BooleanField()
 
-
-    class Meta:
-        model = User
-        fields = [ 'email', 'password1', 'password2'] 
-        #Saca los mensajes de ayuda
-        help_texts = {k:"" for k in fields}
-
-
-class AvatarFormulario(forms.Form):
-
-    #Especificar los campos
-    
-    imagen = forms.ImageField(required=True)
+class RopaFormulario(forms.Form):
+    tipo= forms.CharField(max_length=30)
+    color= forms.CharField(max_length=30)
+    talle= forms.CharField(max_length=30)
+    precio=forms.IntegerField()

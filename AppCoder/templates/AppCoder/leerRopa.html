@@ -3,10 +3,12 @@
 {% load static %}
 
 {% block contenidoQueCambia %}
+<div class="LeerDatacontainer">
+<h2 class="leerTitle">Lista de ropa disponible</h2>
+<div class="productsContainer">
 
-    <h2>Lista de ropa disponible</h2>
     {% for r in ropa %}
-    <ul style="background-color: lightcyan;">
+    <ul class="product">
         <li>{{r.tipo}}</li>
         <li>{{r.precio}}</li>
         <li>{{r.talle}}</li>
@@ -15,6 +17,7 @@
     {% endfor %}
 
     <br>
-    <a href="ropa">Agregar otra Prenda</a>    
-
-{% endblock %}
+</div>
+<a class="addNewProductButton" href="ropa">Nueva Ropa</a>    
+</div>
+    {% endblock %}

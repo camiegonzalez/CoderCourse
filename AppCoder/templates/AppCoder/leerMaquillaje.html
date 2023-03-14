@@ -3,10 +3,11 @@
 {% load static %}
 
 {% block contenidoQueCambia %}
-
-    <h2>Lista de Maquillajes disponible</h2>
+<div class="LeerDatacontainer">
+    <h2 class="leerTitle">Lista de Maquillajes disponible</h2>
+    <div class="productsContainer">
     {% for m in maquillajes %}
-    <ul style="background-color: lightcyan;">
+    <ul class="product">
         <li>{{m.tipo}}</li>
         <li>{{m.precio}}</li>
         <li>{{m.talle}}</li>
@@ -15,5 +16,7 @@
     {% endfor %}
 
     <br>
-    <a href="maquillaje">Agregar otro Maquillaje</a>    
+</div>
+<a class="addNewProductButton" href="maquillaje">Nuevo Maquillaje</a>    
+</div>   
 {% endblock %}

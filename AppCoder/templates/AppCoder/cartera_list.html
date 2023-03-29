@@ -1,0 +1,36 @@
+{% extends "AppCoder/padre.html" %}
+
+{% load static %}
+
+{% block contenidoQueCambia %}
+<div class="LeerDatacontainer">
+    <h2 class="leerTitle">Lista de carteras disponible</h2>
+    <div class="productsContainer">
+        {% for c in object_list %}
+        <ul class="product">
+            <li>{{c.nombre}}</li>
+            <li>{{c.precio}}</li>
+            <li>
+                <button>
+                    <a href="{% url 'Detail' c.id %}">Detalle</a>
+                </button>
+            </li>
+            <li>
+                <button>
+                    <a href="{% url 'Edit' c.id %}">Editar</a>
+                </button>
+            </li>
+            <li>
+                <button>
+                    <a href="{% url 'Delete' c.id %}">Eliminar</a>
+                </button>
+            </li>
+        </ul>
+
+        {% endfor %}
+        
+        <br>
+    </div>
+    <a class="addNewProductButton" href="{% url 'New' %}">Nueva Cartera</a>    
+</div>
+{% endblock %}

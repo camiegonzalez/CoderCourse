@@ -4,14 +4,13 @@
     display: flex;
     flex-direction: column;
     background-color: cornflowerblue;
-    /* width: 100px; */
     list-style: none;
     justify-content: center;
     align-items: center;
     text-align: center;
     margin-inline: 0px;
     padding-inline: 0px;
-    width: 100px;
+    width: 200px;
     border-radius: 10px;
     color: white;
 }

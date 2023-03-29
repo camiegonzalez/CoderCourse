@@ -29,6 +29,8 @@ class CarterasFormulario(forms.Form):
     material= forms.CharField(max_length=30)
     precio=forms.IntegerField()
     capacidad = forms.IntegerField()
+    nombre= forms.CharField(max_length=30)
+
 
 class MaquillajesFormulario(forms.Form):
     tipo= forms.CharField(max_length=30)
@@ -36,9 +38,12 @@ class MaquillajesFormulario(forms.Form):
     tamanio= forms.CharField(max_length=30)
     precio=forms.IntegerField()
     water_proof = forms.BooleanField()
+    nombre= forms.CharField(max_length=30)
+
 
 class RopaFormulario(forms.Form):
     tipo= forms.CharField(max_length=30)
     color= forms.CharField(max_length=30)
     talle= forms.CharField(max_length=30)
     precio=forms.IntegerField()
+    nombre= forms.CharField(max_length=30)

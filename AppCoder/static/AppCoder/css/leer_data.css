@@ -6,10 +6,11 @@
     background-color: cornflowerblue;
     list-style: none;
     justify-content: center;
-    align-items: center;
+    align-items: start;
+    /* margin-inline: auto; */
     text-align: center;
-    margin-inline: 0px;
-    padding-inline: 0px;
+    margin-inline: 20px;
+    padding-inline: 65px;
     width: 200px;
     border-radius: 10px;
     color: white;
@@ -52,4 +53,120 @@
     margin-inline: auto;
     margin-top: 3em;
     margin-bottom: 2em;
+}
+
+.messageContainer{
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+    height: auto;
+    border: 1px solid darkblue;
+    list-style: none;
+}
+
+.messagePageContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.messageDataSection{
+    display: flex;
+}
+.messageDataSection li{
+    margin-right: 20px;
+}
+
+.aboutContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#aboutDescription{
+    margin-top: 30px;
+    font-size: 16;
+    font-weight: 500;
+    width: 600px;
+    text-align: center;
+}
+
+.blogListsContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.blogList {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    list-style-type: none;
+    justify-content: flex-start;
+    margin-inline: 0px;
+    padding-inline: 0px;
+    margin-block: 0px;
+}
+.listsContainer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 600px;
+    display: flex;
+    flex-direction: column;
+    border: solid 1px steelblue;
+    background-color: lightcyan;
+    height: 600px;
+    margin-block: 30px;
+}
+
+.blogList li {
+    margin-bottom: 10px;
+}
+
+.blogDetailPageContainer{
+    display: flex;
+    flex-direction: column;
+    align-self: center !important;
+    justify-content: center;
+    margin-block: 40px;
+    background-color: lightblue;
+    width: 700px;
+    border: solid 1px cadetblue;
+    margin-inline: auto;
+}
+
+.blogDetailContainer{
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+}
+
+#id_cuerpo {
+    width: 500px;
+    height: 100px;
+}
+
+.blogDetailContainer p {
+    width: 500px;
+}
+
+.verPerfilContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profileList{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 600px;
+    width: 600px;
+    border: solid 1px blue;
+    list-style: none;
+    margin-inline: 0px;
+    padding-inline: 0px;
 }

@@ -1,0 +1,14 @@
+{% extends "AppCoder/padre.html" %}
+
+{% load static %}
+
+{% block contenidoQueCambia %}
+
+<form method="post">{% csrf_token %}
+    Estas seguro que deseas borrar el blog "{{ object }}"
+    <input type="submit" value="Submit">
+
+</form>
+<a class="addNewProductButton" href="{% url 'Pages' %}">Regresar</a>
+
+{% endblock %}

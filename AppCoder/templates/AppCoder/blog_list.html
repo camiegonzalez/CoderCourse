@@ -1,0 +1,42 @@
+{% extends "AppCoder/padre.html" %}
+
+{% load static %}
+
+{% block contenidoQueCambia %}
+
+<div class="blogListsContainer">
+    <h2>Lista de Blogs</h2>
+        {% for blog in object_list %}
+        <div class="listsContainer">
+            <ul class="blogList">
+                <li>
+                    <img width="500px" src="{{blog.imagen.url}}">
+                </li>
+                <h3>
+                    <li>{{blog.titulo}}</li>
+                </h3>
+
+                <h4>
+                    <li>{{blog.autor}}</li>
+                </h4>
+                <li>
+                    <button>
+                        <a href="{% url 'PagesDetail' blog.id %}">Detalle</a>
+                    </button>
+                </li>
+                <li>
+                    <button>
+                        <a href="{% url 'PagesEdit' blog.id %}">Editar</a>
+                    </button>
+                </li>
+                <li>
+                    <button>
+                        <a href="{% url 'PagesDelete' blog.id %}">Eliminar</a>
+                    </button>
+                </li>
+            </ul>
+        </div>
+        {% endfor %}
+    <a class="addNewProductButton" href="{% url 'PagesNew' %}">Nuevo Blog</a>    
+</div>
+{% endblock %}

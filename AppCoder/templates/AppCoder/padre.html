@@ -29,16 +29,29 @@
         <nav class="navbar navbar-light bg-light static-top">
             <div class="container">
                 <a class="navbar-brand" href="{% url 'Inicio' %}">Inicio</a>
-                <a class="navbar-brand" href="{% url 'Ropa' %}">Ropa</a>
-                <a class="navbar-brand" href="{% url 'Maquillaje' %}">Maquillaje</a>
-                <a class="navbar-brand" href="{% url 'Carteras' %}">Carteras</a>
+                <a class="navbar-brand" href="{% url 'About' %}">About</a>
+                <a class="navbar-brand" href="{% url 'Messages' %}">Chat</a>
+                <a class="navbar-brand" href="{% url 'Pages' %}">Blogs</a>
                 {% if not request.user.is_authenticated %}
-                <a class="btn btn-primary" href="{% url 'Login' %}">INICIAR</a>
+                <div>
+                    <a class="btn btn-primary" href="{% url 'Login' %}">INGRESAR</a>
+                    <a class="btn btn-secondary" href="{% url 'Register' %}">REGISTRARSE</a>
+                </div>
                 {% endif %}
 
                 {% if request.user.is_authenticated %}
+                <div id="profileSection">
+                    <div>
+                        <img height="50px" src="{{url}}" />
+                    </div>
+                    <div>
+                        <p class="text-muted small mb-4 mb-lg-0"> Hola, {{user.username}}!!!. Que te gustaria hacer?</p>
+                        <a class="btn btn-primary" href="{% url 'Perfil' %}">Ver Perfil</a>
+                        <a class="btn btn-primary" href="{% url 'EditarPerfil' %}">Editar Perfil</a>
+                        <a class="btn btn-primary" href="{% url 'Logout' %}">Logout</a>
+                    </div>
+                </div>
                 
-                <p class="text-muted small mb-4 mb-lg-0"> Hola, {{user.username}}!!!.</p>
                 {% endif %}
 
             </div>
@@ -52,7 +65,7 @@
                     <div class="col-xl-6">
                         <div class="text-center text-white">
                             <!-- Page heading-->
-                            <h1 class="mb-5">Camila's Store - Curso CoderHouse</h1>
+                            <h1 class="mb-5">Camila's Blogs</h1>
                             <!-- Signup form-->
                             <!-- * * * * * * * * * * * * * * *-->
                             <!-- * * SB Forms Contact Form * *-->
@@ -85,23 +98,17 @@
                 <div class="row">
                     <div class="col-lg-6 h-100 text-center text-lg-start my-auto">
                         <ul class="list-inline mb-2">
-                            <li class="list-inline-item"><a href="#!">Ayuda</a></li>
-                            <li class="list-inline-item">⋅</li>
-                            <li class="list-inline-item"><a href="#!">Contacto</a></li>
-                      
+                            <li class="list-inline-item">⋅</li>                      
                         </ul>
                         <p class="text-muted small mb-4 mb-lg-0">&copy; Curso de Python - CoderHouse.</p>
                     </div>
                     <div class="col-lg-6 h-100 text-center text-lg-end my-auto">
                         <ul class="list-inline mb-0">
                             <li class="list-inline-item me-4">
-                                <a href="#!"><i class="bi-facebook fs-3"></i></a>
-                            </li>
-                            <li class="list-inline-item me-4">
-                                <a href="#!"><i class="bi-twitter fs-3"></i></a>
+                                <a href="https://github.com/camiegonzalez"><i class="bi-github fs-3"></i></a>
                             </li>
                             <li class="list-inline-item">
-                                <a href="#!"><i class="bi-instagram fs-3"></i></a>
+                                <a href="https://www.instagram.com/camiiigonzalez.15/" target="_blank"><i class="bi-instagram fs-3"></i></a>
                             </li>
                         </ul>
                     </div>

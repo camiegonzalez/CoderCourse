@@ -1,0 +1,30 @@
+{% extends "AppCoder/padre.html" %}
+
+{% load static %}
+
+{% block contenidoQueCambia %}
+<div class="blogDetailPageContainer">
+
+    <div class="blogDetailContainer">
+        
+        <img src="{{blog.imagen.url}}" width="500px" alt="">
+        <h2>
+            {{blog.titulo}}
+        </h2>
+        <h2>
+            Subtitulo: {{blog.Subtitulo}}
+        </h2>
+        <h2>
+            Autor {{blog.autor}}
+        </h2>
+        <h4>
+            Fecha: {{blog.fecha}}
+        </h4>
+        <p>
+            Cuerpo: {{blog.cuerpo}}
+        </p>
+        <a class="addNewProductButton" href="{% url 'Pages' %}">Regresar</a>
+    </div>
+</div>
+
+{% endblock %}

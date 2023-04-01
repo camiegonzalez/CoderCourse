@@ -1,0 +1,47 @@
+{% extends "AppCoder/padre.html" %}
+
+{% load static %}
+
+{% block contenidoQueCambia %}
+
+<h2 style="text-align: center">Perfil</h2>
+
+{% if user.username %}
+
+<div class="verPerfilContainer">
+    <ul class="profileList">
+        <li style="margin-bottom: 20px;">
+            <img src="{{url}}" width="500px" alt="">
+        </li>
+        <li>
+            Usuario: {{user.username}}
+        </li>
+        <li>
+            Email: {{user.email}}
+        </li>
+        <li>
+            Nombre del Usuario: {{user.first_name}}
+        </li>
+        <li>
+            Apellido del Usuario: {{user.last_name}}
+        </li>
+        {% if user.is_superuser %}
+        <li>
+            EL USUARIO ES ADMINISTRADOR    
+        </li>
+        {% endif %}
+    </ul>
+
+</div>
+
+{% endif %}
+
+
+<!--Aquí va lo que cambia, y lo asociado a está vista :) -->
+
+
+
+
+
+
+{% endblock %}

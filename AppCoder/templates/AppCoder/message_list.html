@@ -1,0 +1,46 @@
+{% extends "AppCoder/padre.html" %}
+
+{% load static %}
+
+{% block contenidoQueCambia %}
+<div class="messagePageContainer">
+<h2>Mensajes</h2>
+<div>
+
+    {% for m in messages %}
+    <ul class="messageContainer">
+        <section class="messageDataSection">
+            <li>User: {{m.user}}</li>
+            <li>Date: {{m.dateTime}}</li>
+        </section>
+        <li>{{m.message}}</li>
+    </ul>
+    {% endfor %}
+
+    <br>
+</div>
+    <h2>Nuevo Mensaje</h2>
+    
+    {% if miFormulario.errors %}
+
+    <p style="color: red;"> Están mal los datos, revisar</p>
+
+    {% endif %}
+
+    <form action="" method="POST">{% csrf_token %}
+
+        <!-- Acá está la magia de Django-->
+        
+        <table>
+
+            {{ miFormulario.as_table }}
+
+
+        </table>
+
+
+        <input type="submit", value="Enviar">
+
+    </form>
+</div>
+    {% endblock %}

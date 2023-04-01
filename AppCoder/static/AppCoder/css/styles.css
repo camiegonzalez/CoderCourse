@@ -529,6 +529,7 @@ progress {
   font-weight: 300;
   line-height: 1.2;
 }
+
 @media (min-width: 1200px) {
   .display-4 {
     font-size: 3.5rem;
@@ -11365,4 +11366,12 @@ header.masthead h1, header.masthead .h1 {
 footer.footer {
   padding-top: 4rem;
   padding-bottom: 4rem;
+}
+
+#profileSection{
+  display: flex;
+  align-items: center;
+}
+#profileSection div{
+  margin-inline: 8px;
 }

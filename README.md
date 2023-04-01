@@ -27,6 +27,15 @@ python manage.py runserver
 * En la parte superior derecha de la pantalla, tendra la opcion de ingresar, para logearse, y registrarse, en caso de no tener un usuario.
 * Una vez logeado en el sistema, podra acceder a todas las secciones.
 
+* Si desea puede usar el usuario ya creado por mi para navegar la pagina.
+
+El super ususario es 
+
+```Python
+usuario: camila
+pw: cumplefan
+```
+
 ### Blogs
 
 * En esta seccion, usted vera todos los blogs que estan creados en la base de datos. Tendra la posibilidad de crear nuevos blogs, editar los existentes, eliminarlos y ver los detalles de los mismos.

@@ -1,7 +1,7 @@
 
 from django import forms
 from django.contrib.auth.models import User
-
+from AppCoder.models import Avatar
 from django.contrib.auth.forms import UserCreationForm
 
 class MessageForm(forms.Form):
@@ -16,7 +16,7 @@ class UserEditForm(UserCreationForm):
     email = forms.EmailField(label="Ingrese su email:")
     password1 = forms.CharField(label='Contraseña', widget=forms.PasswordInput)
     password2 = forms.CharField(
-        label='Repetir la contraseña', widget=forms.PasswordInput)
+    label='Repetir la contraseña', widget=forms.PasswordInput)
 
     last_name = forms.CharField()
     first_name = forms.CharField()
@@ -36,6 +36,17 @@ class UserRegisterForm(UserCreationForm):
     last_name = forms.CharField()
     first_name = forms.CharField()
     imagen_avatar = forms.ImageField(required=False)
+    
+    class Meta(UserCreationForm.Meta):
+        fields = UserCreationForm.Meta.fields + ('imagen_avatar',)
+
+    def save(self, commit=True):
+        user = super().save(commit=commit)
+        imagen_avatar = self.cleaned_data.get('imagen_avatar', None)
+        if imagen_avatar:
+            avatar = Avatar(user=user, imagen=imagen_avatar)
+            avatar.save()
+        return user
 
 
     class Meta:

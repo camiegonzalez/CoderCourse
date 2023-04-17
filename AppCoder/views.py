@@ -1,5 +1,6 @@
 from typing import List
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.http import Http404
 
 from django.shortcuts import redirect, render
 from AppCoder.models import Blog, Avatar, Message
@@ -84,17 +85,14 @@ def messages(request):
         if miFormulario.is_valid:  # Si pasó la validación de Django
 
             messageInfo = miFormulario.cleaned_data
-
-            message = Message (user=request.user.username, message = messageInfo['message'])
-
+            message = Message (user=request.user, message = messageInfo['message'])
+            message.user = request.user
             message.save()
 
             return redirect('Messages')
 
     else:
         messages = Message.objects.all()
-        print(messages[0].dateTime)
-
         miFormulario = MessageForm() #Formulario vacio para construir el html
     avatar = ""
     if request.user.id:
@@ -136,62 +134,62 @@ def login_request(request):
     form = AuthenticationForm()
 
     return render(request, "AppCoder/login.html", {'form':form} )
+class UserCreation(CreateView):
+    model = User
+    form_class = UserRegisterForm
+    success_url = "/AppCoder/login"
+    template_name = "AppCoder/user_creation.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        avatar = ""
+        if self.request.user.id:
+            avatar = Avatar.objects.filter(user=self.request.user.id).first()
+        context['url'] = avatar
+        return context
+
+class UserDetail(LoginRequiredMixin, UserPassesTestMixin, DetailView):
+    model = User
+    template_name = "AppCoder/user_detail.html"
+    context_object_name = 'user'
 
 
-@login_required
-def editarPerfil(request):
-    print(request.user, '-----')
-    usuario = request.user
+    def test_func(self):
+        return self.request.user.is_authenticated and self.get_object().id == self.request.user.id
 
-    if request.method == 'POST':
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
 
-        miFormulario = UserEditForm(request.POST)
+        avatar = ""
+        if self.request.user.id:
+            avatar_object = Avatar.objects.filter(user=self.request.user.id).first()
+            if avatar_object:
+                avatar = avatar_object.imagen.url
+        context['url'] = avatar
 
-        if miFormulario.is_valid():
+        return context
 
-            informacion = miFormulario.cleaned_data
+class UserUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = User
+    fields = ['username', 'first_name', 'last_name', 'email']
+    template_name = 'AppCoder/user_update.html'
 
-            usuario.email = informacion['email']
-            usuario.password1 = informacion['password1']
-            usuario.password2 = informacion['password2']
-            usuario.last_name = informacion['last_name']
-            usuario.first_name = informacion['first_name']
+    def test_func(self):
+        return self.request.user.is_authenticated and self.get_object().id == self.request.user.id
+    
+    def get_success_url(self):
+        return reverse_lazy('Perfil', kwargs={'pk': self.object.pk})
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
 
-            usuario.save()
-            avatar = Avatar.objects.filter(user= request.user.id)[0].imagen.url
-
-            return render(request, "AppCoder/inicio.html", {"url": avatar, "mensaje": f"Bienvenido {usuario}", "user":usuario})
-
-    else:
-
-        miFormulario = UserEditForm(initial={'email': usuario.email})
-
-    return render(request, "AppCoder/editarPerfil.html", {"miFormulario": miFormulario, "user": usuario})
-
-
-def register(request):
-
-    if request.method == 'POST':
-
-        form = UserRegisterForm(request.POST, request.FILES)
-        if form.is_valid():
-
-            form.save()
-            print(request.FILES, '+++++++++++++++++', form.cleaned_data)
-
-            u = User.objects.get(username=form.cleaned_data['username'])
-            avatar = Avatar(user=u, imagen=form.cleaned_data['imagen_avatar'])
-            avatar.save()
-
-            return render(request, "AppCoder/inicio.html" ,  {"mensaje":"Usuario Creado :)"})
-
-    else:
-        #form = UserCreationForm()
-        form = UserRegisterForm()
-
-    return render(request, "AppCoder/registro.html" ,  {"form":form})
-
-
+        avatar = ""
+        if self.request.user.id:
+            avatar = Avatar.objects.filter(user= self.request.user.id)[0].imagen.url
+            print(avatar)
+        context['url'] = avatar
+        return context
 class BlogList(LoginRequiredMixin, ListView):
     model = Blog
     template_name = "AppCoder/blog_list.html"
@@ -225,9 +223,13 @@ class BlogDetalle(LoginRequiredMixin, DetailView):
 class BlogCreation(LoginRequiredMixin, CreateView):
     model = Blog
     success_url = "/AppCoder/pages"
-    fields = ["titulo", "subtitulo", "cuerpo", "autor", "imagen"]
+    fields = ["titulo", "subtitulo", "cuerpo", "imagen"]
     template_name = "AppCoder/blog_creation.html"
 
+    def form_valid(self, form):
+        form.instance.autor = self.request.user
+        return super().form_valid(form)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
@@ -239,12 +241,23 @@ class BlogCreation(LoginRequiredMixin, CreateView):
         return context
 
 
-class BlogUpdate(LoginRequiredMixin, UpdateView):
+class BlogUpdate(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Blog
     success_url = "/AppCoder/pages"
-    fields = ["titulo", "subtitulo", "cuerpo","autor", "imagen"]
+    fields = ["titulo", "subtitulo", "cuerpo", "imagen"]
     template_name = "AppCoder/blog_edit.html"
 
+    def get_object(self, queryset=None):
+        obj = super().get_object(queryset)
+        
+        if not (self.request.user == obj.autor):
+            raise Http404("You are not authorized to edit this blog post.")
+        return obj
+
+    def test_func(self):
+        obj = self.get_object()
+        return self.request.user == obj.autor
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
@@ -256,10 +269,21 @@ class BlogUpdate(LoginRequiredMixin, UpdateView):
         return context
 
 
-class BlogDelete(LoginRequiredMixin, DeleteView):
+class BlogDelete(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Blog
-    success_url = "/AppCoder/pages"
+    success_url = reverse_lazy("Pages")
+    template_name = "AppCoder/blog_confirm_delete.html"
 
+    def get_object(self, queryset=None):
+        obj = super().get_object(queryset)
+        if not self.request.user == obj.autor:
+            raise Http404("You are not authorized to delete this blog post.")
+        return obj
+
+    def test_func(self):
+        obj = self.get_object()
+        return self.request.user == obj.autor
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 

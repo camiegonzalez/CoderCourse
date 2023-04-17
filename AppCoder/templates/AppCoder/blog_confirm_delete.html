@@ -5,7 +5,7 @@
 {% block contenidoQueCambia %}
 
 <form method="post">{% csrf_token %}
-    Estas seguro que deseas borrar el blog "{{ object }}"
+    Estas seguro que deseas borrar el blog "{{ object.titulo }}"
     <input type="submit" value="Submit">
 
 </form>

@@ -12,7 +12,7 @@ class Blog(models.Model):
     titulo= models.CharField(max_length=30)
     subtitulo= models.CharField(max_length=30)
     cuerpo=models.CharField(max_length=300)
-    autor = models.CharField(max_length=30)
+    autor = models.ForeignKey(User, on_delete=models.CASCADE)
     fecha = models.DateTimeField(default=timezone.now, blank=True)
     imagen = models.ImageField(upload_to='blogs', null=True, blank = True)
     
@@ -48,6 +48,6 @@ class Avatar(models.Model):
 
 
 class Message(models.Model):
-    user = models.CharField(max_length=30)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     dateTime = models.DateTimeField(default=timezone.now, blank=True)
     message = models.CharField(max_length=200)

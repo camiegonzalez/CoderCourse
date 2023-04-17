@@ -46,8 +46,8 @@
                     </div>
                     <div>
                         <p class="text-muted small mb-4 mb-lg-0"> Hola, {{user.username}}!!!. Que te gustaria hacer?</p>
-                        <a class="btn btn-primary" href="{% url 'Perfil' %}">Ver Perfil</a>
-                        <a class="btn btn-primary" href="{% url 'EditarPerfil' %}">Editar Perfil</a>
+                        <a class="btn btn-primary" href="{% url 'Perfil' user.id %}">Ver Perfil</a>
+                        <a class="btn btn-primary" href="{% url 'EditarPerfil' user.id %}">Editar Perfil</a>
                         <a class="btn btn-primary" href="{% url 'Logout' %}">Logout</a>
                     </div>
                 </div>
